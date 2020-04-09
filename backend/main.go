@@ -19,7 +19,7 @@ func main() {
 	config := cors.DefaultConfig()
 	config.AllowAllOrigins = true
 	config.AllowMethods = []string{"GET", "POST", "OPTIONS", "PUT", "DELETE"}
-	config.AllowHeaders = []string{"Origin", "Authorization"}
+	config.AllowHeaders = []string{"Origin", "Authorization", "Content-Type"}
 	router.Use(cors.New(config))
 	// User Route
 	router.POST("/login", loginHandler)
