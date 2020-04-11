@@ -34,3 +34,64 @@ func GetNote(c *gin.Context) {
 		"data":   arr_note[0],
 	})
 }
+
+func AddNote(c *gin.Context) {
+
+	db := config.Dbconn()
+	defer db.Close()
+
+	var input structs.Note
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	title := input.Title
+	note := input.Note
+	db.Exec("INSERT INTO tb_note (title, note) VALUES (?,?)",
+		title,
+		note,
+	)
+	c.JSON(http.StatusOK, gin.H{
+		"status": http.StatusOK,
+		"data":   "Success add to database",
+	})
+
+}
+
+func UpdateNote(c *gin.Context) {
+		id := c.Param("id")
+		db := config.Dbconn()
+		defer db.Close()
+		var input structs.Note
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		title := input.Title
+		note := input.Note
+		db.Exec("UPDATE tb_note SET title = ? , note = ? WHERE id_note = ?",
+			title,
+			note,
+			id,
+		)
+		c.JSON(http.StatusOK, gin.H{
+			"status": http.StatusOK,
+			"data":   "Success update database",
+
+		})
+
+	}
+
+func DeleteNote(c *gin.Context) {
+	id := c.Param("id")
+		db := config.Dbconn()
+		defer db.Close()
+		db.Exec("DELETE FROM tb_note WHERE id_note = ?",
+			id,
+		)
+		c.JSON(http.StatusOK, gin.H{
+			"status": http.StatusOK,
+			"data":   "Success delete database",
+
+		})
+}

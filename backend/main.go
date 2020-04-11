@@ -2,16 +2,17 @@ package main
 
 import (
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/bcrypt"
 	"log"
 	"net/http"
 	"pratice/config"
 	"pratice/controllers"
 	"pratice/structs"
 	"strings"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func main() {
@@ -27,6 +28,9 @@ func main() {
 	router.GET("/me", auth, me)
 	// Note Route
 	router.GET("/note", auth, controllers.GetNote)
+	router.POST("/note/add", auth, controllers.AddNote)
+	router.PUT("note/edit/:id", auth, controllers.UpdateNote) 
+	router.DELETE("note/delete/:id", auth, controllers.DeleteNote) 
 	router.Run(":3000")
 }
 func me(c *gin.Context) {
