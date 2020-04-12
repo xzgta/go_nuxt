@@ -1,27 +1,22 @@
 <template>
   <div>
-    <div class="container is-fluid">
-      <div class="notification">
+    <div>
+      <div>
         Welcome
         <strong>{{$auth.user}}</strong>
       </div>
-      <!-- table -->
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>
-              <abbr title="Played">Note</abbr>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(rbb, rbb_i) in response.note" :key="'rbb_i' + rbb_i">
-            <th>{{rbb.title}}</th>
-            <td>{{rbb.note}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border px-4 py-2">Title</th>
+          <th class="border px-4 py-2">Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(rb, i)  in response.note" :key="'rb-'+ i">
+          <td class="border px-4 py-2">{{rb.title}}</td>
+          <td class="border px-4 py-2">{{rb.note}}</td>
+        </tr>
+      </tbody>
     </div>
   </div>
 </template>
@@ -45,8 +40,8 @@ export default {
       self.$axios
         .get("/note")
         .then(response => {
-          self.response.note = response.data;
-          console.log(response.data);
+          self.response.note = response.data.data;
+          console.log(response.data.data);
         })
         .catch(function(error) {
           alert(error.message);

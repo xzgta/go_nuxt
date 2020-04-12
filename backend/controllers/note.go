@@ -31,7 +31,7 @@ func GetNote(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"status": http.StatusOK,
-		"data":   arr_note[0],
+		"data":   arr_note,
 	})
 }
 

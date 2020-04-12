@@ -42,7 +42,7 @@ export default {
 
   modules: [
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    '@nuxtjs/bulma',
+    '@nuxtjs/tailwindcss',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
@@ -89,6 +89,12 @@ export default {
   ** Build configuration
   */
   build: {
+    tailwindcss: {
+      configPath: '~/config/tailwind.config.js',
+      cssPath: '~/assets/css/tailwind.css',
+      purgeCSSInDev: false,
+      exposeConfig: true
+    },
     postcss: {
       preset: {
         features: {
