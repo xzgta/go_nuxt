@@ -7,8 +7,17 @@
             class="bg-gray-200 focus:bg-white outline-none py-2 px-4 block w-full"
             placeholder="Username"
             v-model="post_user_login.username"
+            :class="{'border border-red-500': isValidUsername.length && post_user_login.username.length < 6, 'border border-green-500': isValidUsername.length && post_user_login.username.length > 5 }"
           />
         </div>
+        <p
+          class="text-green-500 text-xs italic"
+          v-if="isValidUsername.length && post_user_login.username.length > 5"
+        >Username valid</p>
+        <p
+          class="text-red-500 text-xs italic"
+          v-else-if="isValidUsername.length && post_user_login.username.length < 6"
+        >Username tidak valid</p>
         <div class="p-3">
           <input
             type="text"
@@ -20,6 +29,7 @@
         <div class="p-3">
           <button
             class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            :class="{'opacity-50 cursor-not-allowed': isValidUsername.length && post_user_login.username.length < 6 }"
             @click="userLogin"
           >Login</button>
         </div>
@@ -84,6 +94,12 @@ export default {
             self.post_user_login_status = false;
           });
       }
+    }
+  },
+  computed: {
+    isValidUsername() {
+      let self = this;
+      return self.post_user_login.username;
     }
   }
 };
